@@ -31,7 +31,7 @@ export default {
 name:'Login',
 data () {
   return {
-    //表单数据绑定对象
+    //表单数据绑定对象 post请求传递的参数
     loginForm:{
       username:'admin',
       password:'123456'
@@ -69,7 +69,10 @@ methods: {
           message: '登录成功',
           type: 'success'
         });
-        window.sessionStorage.setItem('token',res.data.token)
+      // 将token保存到浏览器本地
+      //token是服务器返回给客户端登录成功用户的一串唯一的标识
+      window.sessionStorage.setItem('token',res.data.token)
+      // 登陆成功就跳转页面到home页（编程导航 ）
       this.$router.push('home')
       }
       

@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/Login'
-import Home from '../components/Home';
+import Home from '../components/Home'
+import Welcome from '../components/Welcome'
+import Users from '../components/users/Users';
 Vue.use(Router)
 const router = new Router({
         routes: [{
@@ -13,7 +15,15 @@ const router = new Router({
                 component: Login
             }, {
                 path: '/home',
-                component: Home
+                component: Home,
+                redirect: '/welcome', //访问home页面 自动重定向到welcome
+                children: [{
+                    path: '/welcome',
+                    component: Welcome
+                }, {
+                    path: '/user',
+                    component: Users
+                }]
             }
         ]
     })
@@ -25,6 +35,8 @@ router.beforeEach((to, from, next) => {
     if (to.path == '/login') {
         return next()
     }
+    //获取本地是否有token 有则可以直接访问需要权限的页面
+    //没有则强行跳转到登录页
     var tokenStr = window.sessionStorage.getItem('token')
     if (!tokenStr) {
         return next('/login')
