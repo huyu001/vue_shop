@@ -3,7 +3,9 @@ import Router from 'vue-router'
 import Login from '../components/Login'
 import Home from '../components/Home'
 import Welcome from '../components/Welcome'
-import Users from '../components/users/Users';
+import Users from '../components/users/Users'
+import Rights from '../components/power/Rights';
+import Roles from '../components/power/Roles';
 Vue.use(Router)
 const router = new Router({
         routes: [{
@@ -17,12 +19,19 @@ const router = new Router({
                 path: '/home',
                 component: Home,
                 redirect: '/welcome', //访问home页面 自动重定向到welcome
+                // /home下面的子路由
                 children: [{
                     path: '/welcome',
                     component: Welcome
                 }, {
                     path: '/user',
                     component: Users
+                }, {
+                    path: '/rights',
+                    component: Rights
+                }, {
+                    path: '/roles',
+                    component: Roles
                 }]
             }
         ]

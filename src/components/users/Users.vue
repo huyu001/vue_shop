@@ -63,7 +63,7 @@
            <el-button type="primary" icon="el-icon-edit" size='mini' @click="showEditUserDialog(scope.row.id)"></el-button>
            <el-button type="danger" icon="el-icon-delete" size='mini' @click="delateUser(scope.row.id)"></el-button>       
            <el-tooltip class="item" effect="dark" content="角色分配" placement="top" :enterable='false'>
-             <el-button type="warning" icon="el-icon-setting" size='mini'> </el-button>
+             <el-button type="warning" icon="el-icon-setting" size='mini'  @click='setRoles(scope.row)'> </el-button>
            </el-tooltip>
          </template>
       </el-table-column>
@@ -126,7 +126,28 @@
         <el-button type="primary" @click="editUserForm">确 定</el-button>
       </span>
     </el-dialog>
-    </el-card>
+    <!-- 分配角色对话框 -->
+    <el-dialog title="分配角色" :visible.sync="setRolesDialog" width="50%">
+       <dir>
+         <p>当前用户：{{CurrentuserInfo.username}}</p>
+         <p>当前角色：{{CurrentuserInfo.role_name}}</p>
+         <p>分配角色：
+           <el-select v-model="selsectRole" placeholder="请选择" >
+            <el-option
+              v-for="item in rolesList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id">
+            </el-option>
+          </el-select>
+         </p>
+       </dir>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRolesDialog = false">取 消</el-button>
+        <el-button type="primary" @click="setNewRole">确 定</el-button>
+      </span>
+    </el-dialog>
+  </el-card>
     
   </div>
 </template>
@@ -206,7 +227,15 @@ data () {
           { required: true, message: '请输入手机', trigger: 'blur' },
           { validator:checkMobile,trigger: 'blur'  }
         ]
-    }
+    },
+    // 分配角色对话框
+    setRolesDialog:false,
+    // 所有角色数据
+    rolesList:[],
+    //当前展示行的角色信息
+    CurrentuserInfo:{},
+    // 选择的角色Id绑定
+    selsectRole:''
   }
 },
 created () {
@@ -315,7 +344,6 @@ methods: {
       if(res.meta.status!=200){
         return this.$message.error(res.meta.msg)
       }
-      console.log(res);
       // 重新请求数据渲染页面
       this.getUserList()
       this.$message({
@@ -323,6 +351,26 @@ methods: {
             message: '删除成功!'
           })
     }
+  },
+  async setRoles(role){
+    this.CurrentuserInfo=role
+    // 在展示对话框前 获取所有角色列表
+    var {data:res}=await this.$http.get('roles')
+    this.rolesList=res.data
+    this.setRolesDialog=true
+  },
+  // 点击确定按钮分配新角色
+  async setNewRole(){
+    // 判断是否选取 了新角色
+    if(!this.selsectRole){
+      return this.$message.warning('请选择新角色')
+    }
+    var {data:res}=await this.$http.put(`users/${this.CurrentuserInfo.id}/role`,{rid:this.selsectRole})
+    if(res.meta.status!=200){
+      return this.$message.error('设置角色失败')
+    }
+    this.getUserList()
+    this.setRolesDialog=false
   } 
 }
 }
@@ -340,5 +388,11 @@ methods: {
 }
 .el-pagination{
  margin: 10px auto 0;
+}
+.el-select{
+  width: 310px!important;
+}
+.el-input{
+  width: 100%;
 }
 </style>
