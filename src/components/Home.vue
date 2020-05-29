@@ -62,7 +62,7 @@ data(){
       'path':'rights'
     },{
       'authName':'商品管理',
-      'children':[{'authName':'商品列表','path':'goods'},{'authName':'分类参数','path':'params'},{'authName':'商品分类','path':'"categories"'}],
+      'children':[{'authName':'商品列表','path':'goods'},{'authName':'分类参数','path':'params'},{'authName':'商品分类','path':'categories'}],
       'id':'101',
       'path':'goods'
     },{

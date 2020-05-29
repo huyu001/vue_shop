@@ -6,9 +6,10 @@ import router from './router'
 import './assets/css/global.css'
 import './assets/icons/iconfont.css';
 import { Message } from 'element-ui';
+import ZkTable from 'vue-table-with-tree-grid'
 //引用配置axois并设置根路径
 import axios from 'axios';
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://119.23.53.78:8888/api/private/v1/'
 Vue.prototype.$http = axios
 Vue.prototype.message = Message
     //配置axios拦截器 
@@ -20,6 +21,7 @@ axios.interceptors.request.use(config => {
     return config
 })
 
+Vue.component('treeTable', ZkTable)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 

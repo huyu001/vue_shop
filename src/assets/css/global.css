@@ -7,6 +7,6 @@ body,
     margin: 0;
 }
 
-el-card {
+.el-card {
     margin-top: 10px!important;
 }

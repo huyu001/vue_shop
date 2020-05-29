@@ -60,7 +60,7 @@ methods: {
   login(){
     this.$refs.formRef.validate(async res=>{
       if(!res) return;
-      var {data:res}=await this.$http.post('login',this.loginForm)
+      var {data:res}=await this.$http.get('login',{params:this.loginForm})
       if(res.meta.status!=200){
         this.$message.error('登录失败');
       }
