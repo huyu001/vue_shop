@@ -7,6 +7,7 @@ import Users from '../components/users/Users'
 import Rights from '../components/power/Rights';
 import Roles from '../components/power/Roles';
 import Cart from '../components/goods/Cart';
+import Params from '../components/goods/Params';
 Vue.use(Router)
 const router = new Router({
         routes: [{
@@ -36,6 +37,9 @@ const router = new Router({
                 }, {
                     path: '/categories',
                     component: Cart
+                }, {
+                    path: '/params',
+                    component: Params
                 }]
             }
         ]
