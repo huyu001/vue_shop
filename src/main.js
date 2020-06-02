@@ -7,6 +7,11 @@ import './assets/css/global.css'
 import './assets/icons/iconfont.css';
 import { Message } from 'element-ui';
 import ZkTable from 'vue-table-with-tree-grid'
+import VueQuillEditor from 'vue-quill-editor' //导入富文本编辑器
+// 导入富文本编辑器样式
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 //引用配置axois并设置根路径
 import axios from 'axios';
 axios.defaults.baseURL = 'http://119.23.53.78:8888/api/private/v1/'
@@ -22,6 +27,7 @@ axios.interceptors.request.use(config => {
 })
 
 Vue.component('treeTable', ZkTable)
+Vue.use(VueQuillEditor) //注册富文本编辑器为全局可用组件
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 

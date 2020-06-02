@@ -38,7 +38,8 @@
    <!-- 内容区 -->
     <el-main class="home_main">
       <!-- welcome路由占位符 -->
-      <router-view></router-view>
+      <router-view>
+      </router-view>
     </el-main>
   </el-container>
 </el-container>

@@ -8,6 +8,8 @@ import Rights from '../components/power/Rights';
 import Roles from '../components/power/Roles';
 import Cart from '../components/goods/Cart';
 import Params from '../components/goods/Params';
+import GoodsList from '../components/goods/GoodsList';
+import AddGoods from '../components/goods/AddGoods';
 Vue.use(Router)
 const router = new Router({
         routes: [{
@@ -40,6 +42,12 @@ const router = new Router({
                 }, {
                     path: '/params',
                     component: Params
+                }, {
+                    path: '/goods',
+                    component: GoodsList,
+                }, {
+                    path: '/goods/add',
+                    component: AddGoods
                 }]
             }
         ]
