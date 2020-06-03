@@ -12,6 +12,10 @@ import VueQuillEditor from 'vue-quill-editor' //导入富文本编辑器
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
+// 导入nprogress js与css
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
 //引用配置axois并设置根路径
 import axios from 'axios';
 axios.defaults.baseURL = 'http://119.23.53.78:8888/api/private/v1/'
@@ -20,9 +24,18 @@ Vue.prototype.message = Message
     //配置axios拦截器 
     //在每次发送请求前 在请求头中使用 `Authorization` 字段提供 `token` 令牌 授予权限访问
     //很多接口必须授权才能调用
+    //发送请求前打开nprogress
 axios.interceptors.request.use(config => {
-    //为请求头字段添加Authorization字段进行身份验证
-    config.headers.Authorization = window.sessionStorage.getItem('token')
+        //为请求头字段添加Authorization字段进行身份验证
+        config.headers.Authorization = window.sessionStorage.getItem('token')
+            // 打开进度条
+        NProgress.start()
+        return config
+    })
+    // 接收响应头中关闭进度条
+axios.interceptors.response.use(config => {
+    // 关闭进度条
+    NProgress.done()
     return config
 })
 
