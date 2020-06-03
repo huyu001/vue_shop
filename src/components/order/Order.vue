@@ -46,7 +46,7 @@
     </el-pagination>
   </el-card>
   <!-- 修改地址对话框 -->
-  <el-dialog title="修改地址" :visible.sync="adressDialogVisible" width="30%">  
+  <el-dialog title="修改地址" :visible.sync="adressDialogVisible" width="30%" @close='adressClose'>  
     <el-form :model="adressRuleForm" :rules="adressRule" ref="adressRuleFormRef" label-width="100px" class="demo-ruleForm">
       <el-form-item label="请选择地区" prop="adress1">
         <el-cascader v-model="adressRuleForm.adress1" :options="city_data" :props="{ expandTrigger: 'hover' }"
@@ -58,7 +58,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="adressDialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      <el-button type="primary" @click="adressDialogVisible = false">确 定</el-button>
     </span>
   </el-dialog>
   <!-- 显示物流对话框 -->
@@ -136,6 +136,11 @@ methods: {
   // 显示地址信息对话框
   showAdressDialog(){
     this.adressDialogVisible=true
+  },
+  // 监听修改地址对话框的关闭
+  adressClose(){
+    // 重置表单
+    this.$refs.adressRuleFormRef.resetFields()
   },
   // 监听级联选择器选择性的改变
   handleChange(){
